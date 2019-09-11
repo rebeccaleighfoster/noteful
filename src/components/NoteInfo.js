@@ -1,5 +1,6 @@
 import React from "react";
 import DummyStore from "./DummyStore";
+import moment from "moment"
 
 const NoteInfo = props => {
     const noteId = props.match.params.noteId || null;
@@ -10,7 +11,7 @@ const NoteInfo = props => {
             </div>
             <div className="notes-pane">
                 <div>{noteData.name}</div>
-                <div>{noteData.modified} ("MMM Do YY")}</div>
+                <div>{moment(noteData.modified)} ("MMM Do YY")}</div>
                 <div>{noteData.content}</div>
             </div>
         </div>
