@@ -65,5 +65,9 @@ class Notes extends React.Component {
     }
   }
   
+  Note.propTypes = {
+    value: PropTypes.string
+  }
+
   export default Notes;
   

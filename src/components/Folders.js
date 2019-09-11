@@ -7,7 +7,7 @@ export default class Folders extends React.Component{
     constructor(props) {
       super(props);
       this.state = {
-        folders: DummyStore.folders
+        folders: /*what here?*/ .folders
       }
     }
 
