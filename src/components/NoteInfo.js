@@ -11,7 +11,7 @@ const NoteInfo = props => {
             </div>
             <div className="notes-pane">
                 <div>{noteData.name}</div>
-                <div>{moment(noteData.modified)} ("MMM Do YY")}</div>
+               /*<div>{/*{moment(noteData.modified)} ("MMM Do YY")*/}</div>
                 <div>{noteData.content}</div>
             </div>
         </div>

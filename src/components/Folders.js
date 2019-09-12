@@ -28,9 +28,6 @@ export default class Folders extends React.Component {
         if (!res.ok) return res.json().then(e => Promise.reject(e));
         return res.json();
       })
-      .then(() => {
-        // what lives here??
-      })
       .catch(error => {
         console.error({ error });
       });

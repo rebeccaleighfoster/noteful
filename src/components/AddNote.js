@@ -2,18 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import MyContext from "./MyContext";
 
-export default class AddFolder extends React.Component {
+export default class AddNote extends React.Component {
 
     static defaultProps = {
-      addFolder: () => {},
+      addNote: () => {},
     }
 
 
-    handleAddFolder = (event, context) => {
+    handleAddNote = (event, context) => {
       event.preventDefault();
-      const newFolder = {};
-      newFolder.name = event.target.name.value;
-      const folderId = this.props.id;
+      const newNote = {};
+      newNote.name = event.target.name.value;
+      const noteId = this.props.id;
+      console.log( "add note clicked ")
 
       fetch(`http://localhost:9090/folders`, {
         method: 'POST',
@@ -28,7 +29,7 @@ export default class AddFolder extends React.Component {
         return res.json()
       })
       .then(() => {
-        context.addFolder(newFolder);
+        context.addNote(newNote);
         this.props.history.push('/');
       })
       .catch(error => {
@@ -46,8 +47,8 @@ export default class AddFolder extends React.Component {
           <MyContext.Consumer>
             {(context) => {
               return (
-                <form className="createFolder" onSubmit={(event) => this.handleAddFolder(event, context)}>
-                    <h2>Add Folder</h2>
+                <form className="createNote" onSubmit={(event) => this.handleAddNote(event, context)}>
+                    <h2>Add Note</h2>
                     <div className="form-group">
                         <label htmlFor="name">Name</label>
                         <input type="text" className="name" name="name" id="name" />
