@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, } from "react-router-dom";
 function App() {
 
   return (
-    <MyContext.Provider value={{ /*what lives here*/ }}>
+    <MyContext.Provider value={{ notes: [], folders: []  }}>
       <Router>
       <Route path="/" exact component={Notes} />
       <Route path="/folder/:id" exact component={Notes} />

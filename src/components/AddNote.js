@@ -1,84 +1,70 @@
 import React from 'react'
-//import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import MyContext from "./MyContext";
 
-export default class AddNote extends React.Component {
-        
+export default class AddFolder extends React.Component {
+
     static defaultProps = {
-        addNote: () => {},
-      }
-    static contextType = ApiContext;
+      addFolder: () => {},
+    }
 
-      handleAddNote = event => {
-        event.preventDefault()
-        const newNote = {};
-        newNote.name = event.target.name.value;
-        newNote.content = event.target.content.value;
-        newNote.folderId = event.target.folder.value;
-        newNote.noteId = this.props.id;
-        const noteId = this.props.id;
-        
-    fetch(`http://localhost:9090/notes`, {
+
+    handleAddFolder = (event, context) => {
+      event.preventDefault();
+      const newFolder = {};
+      newFolder.name = event.target.name.value;
+      const folderId = this.props.id;
+
+      fetch(`http://localhost:9090/folders`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json'
         },
-        body: JSON.stringify(newNote)
-        })
-        .then(res => {
-          if (!res.ok)
-            return res.json().then(e => Promise.reject(e))
-          return res.json()
-        })
-        .then(() => {
-          this.context.addNote(noteId)
-          this.props.addNote(noteId)
-        })
-        .catch(error => {
-          console.error({ error })
-        });
+        body: JSON.stringify(newFolder)
+      })
+      .then(res => {
+        if (!res.ok)
+          return res.json().then(e => Promise.reject(e))
+        return res.json()
+      })
+      .then(() => {
+        context.addFolder(newFolder);
+        this.props.history.push('/');
+      })
+      .catch(error => {
+        console.error({ error })
+      });
     }
-      
-    validateName() {
-        const name = "this.state.name.value.trim()"
-        if (name.length === 0) {
-            return 'Name is required';
-        }
-    }
-    
-    render() {
-        const { notes, folders } = this.context
-        const { noteId } = this.props.match.params
-        const note = findNote(notes, noteId) || {}
-        const folder = findFolder(folders, note.folderId)
-        const myFolders = folders.map((folder, index) => <option key={index} value={folder.id}>{folder.name}</option>)
-        console.log(myFolders)
-        return (
-            <div>
-                <form className="createNote" onSubmit={this.handleAddNote}>
-                    <h2>Add Note</h2>
-                    <div className="form-group">
-                        <div className="noteHint">* required</div>
-                        <label htmlFor="name">Name*</label>
-                        <input type="text" className="noteName" name="name" id="noteName" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="content">Content</label>
-                        <input type="text" className="noteContent" name="content" id="noteContent" />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="folderSelect">Folder Select</label>
-                        <select className="folderSelect" name="folder">
-                            { myFolders }
-                        </select>
-                    </div>
 
-                    <div className="note-button">
-                        <button type="submit" className="noteButtonSubmit">
+    render() {
+      const { notes, folders, } = this.context
+      const { noteId } = this.props.match.params
+      // const note = findNote(notes, noteId) || {}
+      // const folder = findFolder(folders, note.folderId)
+
+        return (
+          <MyContext.Consumer>
+            {(context) => {
+              return (
+                <form className="createFolder" onSubmit={(event) => this.handleAddFolder(event, context)}>
+                    <h2>Add Folder</h2>
+                    <div className="form-group">
+                        <label htmlFor="name">Name</label>
+                        <input type="text" className="name" name="name" id="name" />
+                    </div>
+                    <div className="createFolderButtons">
+                        <button type="submit" className="buttonSubmit">
                             Save
                         </button>
                     </div>
                 </form>
-            </div>
-        )
+              )
+            }}
+        </MyContext.Consumer>
+      );
     }
+}
+
+AddFolder.propTypes = {
+    value: PropTypes.string
 }
