@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import MyContext from "./MyContext"
 import PropTypes from "prop-types";
 import DummyStore from './DummyStore';
+import ErrorBoundary from './ErrorBoundary';
 
 class Notes extends React.Component {
     constructor(props) {
@@ -86,7 +87,8 @@ class Notes extends React.Component {
       return (
         <MyContext.Provider value={{ folders, notes, addFolder: this.addFolder }}>
           <div className="d-flex">
-            <div className="folders-pane">
+              <ErrorBoundary>
+              <div className="folders-pane">
               <Folders />
             </div>
             <button
@@ -99,6 +101,7 @@ class Notes extends React.Component {
                 {this.filterByFolderId(notes, folderId)}
               </div>) : notes.map(note => <div key={note.id}><Link to={`/note/${note.id}`} key={note.id}>{note.name}</Link></div>)}
             </div>
+              </ErrorBoundary>
           </div>
         </MyContext.Provider>
       )
