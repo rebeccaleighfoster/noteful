@@ -95,7 +95,7 @@ class Notes extends React.Component {
               className='Note__delete'
               type='button'
               onClick={this.handleNoteDelete}
-            ></button>
+            > handleNoteDelete </button>
             <div className="notes-pane">
               {folderId ? (<div>
                 {this.filterByFolderId(notes, folderId)}

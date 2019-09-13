@@ -14,9 +14,11 @@ export default class Folders extends React.Component {
     });
   };
 
-  handleFolderDelete = e => {
+  handleFolderDelete = folderId = e => {
     e.preventDefault();
     const folderId = this.props.id;
+    console.log(this.state)
+    console.log(this.props)
 
     fetch(`http://localhost:9090/folders/${folderId}`, {
       method: "DELETE",
@@ -40,11 +42,11 @@ export default class Folders extends React.Component {
           return context.folders.map(folder => (
             <div key={folder.name}>
               <div onClick={() => this.addFolder()}>{folder.name}</div>
-              <button
+              <button 
                 className="Note__delete"
-                type="button"
-                onClick={this.handleFolderDelete}
-              ></button>
+                type="button" 
+                onClick={this.handleFolderDelete(folder.id)}
+              > handle folder delete </button>
               {context.notes.filter(note => note.folderId === folder.id).length}
             </div>
           ));
